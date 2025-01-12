@@ -44,6 +44,7 @@ services:
       - "6379:6379"
     command: redis-server --requirepass ${REDIS_PASSWORD}
     environment:
+      REDIS_USERNAME: ${REDIS_USERNAME}
       REDIS_PASSWORD: ${REDIS_PASSWORD}
     volumes:
       - cache:/data

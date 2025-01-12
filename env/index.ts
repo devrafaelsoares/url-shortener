@@ -22,6 +22,7 @@ const EnvironmentSchema = z.object({
     DATABASE_PORT: z.string({ required_error: "Configuração obrigatória" }).optional(),
     REDIS_HOST: z.string({ required_error: "Configuração obrigatória" }).default("127.0.0.1"),
     REDIS_PORT: z.coerce.number({ required_error: "Configuração obrigatória" }).optional(),
+    REDIS_USERNAME: z.string({ required_error: "Configuração obrigatória" }),
     REDIS_PASSWORD: z.string({ required_error: "Configuração obrigatória" }),
     DATABASE_NAME: z.string({ required_error: "Configuração obrigatória" }),
     SECRET_KEY_TOKEN: z.string({ required_error: "Configuração obrigatória" }),
