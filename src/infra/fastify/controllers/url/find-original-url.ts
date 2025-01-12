@@ -17,7 +17,7 @@ export class FindOriginalUrlControllerFastify implements Controller<FastifyReque
         const { short_url } = request.params;
 
         const xForwardedFor = request.headers["x-forwarded-for"] as string | undefined;
-        const ipAddress = xForwardedFor || request.ip;
+        const ipAddress = xForwardedFor ? xForwardedFor.split(",")[0].trim() : request.ip;
         const userAgent = request.headers["user-agent"];
 
         const foundUrlResult = await this.props.findOriginalUrlUseCase.execute({

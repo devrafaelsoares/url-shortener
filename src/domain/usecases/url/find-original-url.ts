@@ -26,7 +26,6 @@ export class FindOriginalUrlUseCase {
     }: FindOriginalUrlUseCaseRequestProps): Promise<
         Either<ValidationError<UrlLogPropsCreate>[] | NotFoundEntityError, UrlResponseProps>
     > {
-        console.log({ ip_address });
         const foundUrl = await this.props.urlRepository.findByShortUrl(short_url);
 
         const currentDate = new Date();
