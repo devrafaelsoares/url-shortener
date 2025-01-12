@@ -1,0 +1,17 @@
+export enum ErrorMessages {
+    NOT_EXISTS_USER = "O usuário informado não foi encontrado",
+    NOT_EXISTS_TOKEN = "Token de verificação não encontrado ou expirado",
+    NOT_EXISTS_SHORT_URL = "O código da URL encurtada não existe",
+    EXISTS_URL = "O código da URL encurtada já está em uso",
+    EXISTS_USER_EMAIL = "Este e-mail já está registrado em nossa plataforma",
+    INVALID_USER_PASSWORD = "Usuário ou senha inválidos",
+    TOKEN_NOT_MATCH_USER = "O token fornecido não corresponde ao usuário informado",
+    ACCOUNT_ALREADY_ACTIVATED = "Sua conta já se encontra ativada",
+    ACCOUNT_NOT_ACTIVATED = "A conta ainda não foi ativada. Verifique seu e-mail para concluir a ativação",
+    EXPIRED_TOKEN = "O token de verificação fornecido expirou. Solicite um novo",
+    ERROR_CREATING_ACCOUNT = "Ocorreu um erro ao tentar ativar a conta. Por favor, tente novamente mais tarde",
+    ACCOUNT_TEMPORARILY_BLOCKED = "Sua conta está temporariamente bloqueada devido a muitas tentativas de login falhas. Tente novamente mais tarde.",
+    PAGE_LESS_THAN_ONE = "O número da página deve ser maior ou igual a 1",
+    PAGE_LARGER_THAN_LIMIT = "O número da página é maior que o limite permitido",
+    ACCESS_DENIED = "Acesso não autorizado",
+}

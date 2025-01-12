@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ErrorMessages = void 0;
+var ErrorMessages;
+(function (ErrorMessages) {
+    ErrorMessages["NOT_EXISTS_USER"] = "O usu\u00E1rio informado n\u00E3o foi encontrado";
+    ErrorMessages["NOT_EXISTS_TOKEN"] = "Token de verifica\u00E7\u00E3o n\u00E3o encontrado ou expirado";
+    ErrorMessages["NOT_EXISTS_SHORT_URL"] = "O c\u00F3digo da URL encurtada n\u00E3o existe";
+    ErrorMessages["EXISTS_URL"] = "O c\u00F3digo da URL encurtada j\u00E1 est\u00E1 em uso";
+    ErrorMessages["EXISTS_USER_EMAIL"] = "Este e-mail j\u00E1 est\u00E1 registrado em nossa plataforma";
+    ErrorMessages["INVALID_USER_PASSWORD"] = "Usu\u00E1rio ou senha inv\u00E1lidos";
+    ErrorMessages["TOKEN_NOT_MATCH_USER"] = "O token fornecido n\u00E3o corresponde ao usu\u00E1rio informado";
+    ErrorMessages["ACCOUNT_ALREADY_ACTIVATED"] = "Sua conta j\u00E1 se encontra ativada";
+    ErrorMessages["ACCOUNT_NOT_ACTIVATED"] = "A conta ainda n\u00E3o foi ativada. Verifique seu e-mail para concluir a ativa\u00E7\u00E3o";
+    ErrorMessages["EXPIRED_TOKEN"] = "O token de verifica\u00E7\u00E3o fornecido expirou. Solicite um novo";
+    ErrorMessages["ERROR_CREATING_ACCOUNT"] = "Ocorreu um erro ao tentar ativar a conta. Por favor, tente novamente mais tarde";
+    ErrorMessages["ACCOUNT_TEMPORARILY_BLOCKED"] = "Sua conta est\u00E1 temporariamente bloqueada devido a muitas tentativas de login falhas. Tente novamente mais tarde.";
+    ErrorMessages["PAGE_LESS_THAN_ONE"] = "O n\u00FAmero da p\u00E1gina deve ser maior ou igual a 1";
+    ErrorMessages["PAGE_LARGER_THAN_LIMIT"] = "O n\u00FAmero da p\u00E1gina \u00E9 maior que o limite permitido";
+    ErrorMessages["ACCESS_DENIED"] = "Acesso n\u00E3o autorizado";
+})(ErrorMessages || (exports.ErrorMessages = ErrorMessages = {}));

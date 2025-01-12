@@ -1,0 +1,62 @@
+version: "3.9"
+
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: url-shortener
+    ports:
+      - "${FASTIFY_PORT}:${FASTIFY_PORT}"
+    env_file: .env
+    environment:
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ${DATABASE_NAME}
+    depends_on:
+      - database
+      - redis
+    restart: unless-stopped
+    networks:
+      - app-network
+
+  database:
+    image: postgres:16
+    container_name: url-shortener-database
+    ports:
+      - "5432:5432"
+    env_file: .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    networks:
+      - app-network
+  redis:
+    image: redis:7.4-alpine
+    container_name: url-shortener-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --requirepass ${REDIS_PASSWORD}
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+    volumes:
+      - cache:/data
+    restart: unless-stopped
+    networks:
+      - app-network
+
+volumes:
+  db_data:
+    driver: local
+  cache:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
