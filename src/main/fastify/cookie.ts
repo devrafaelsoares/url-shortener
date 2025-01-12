@@ -6,7 +6,7 @@ export const cookiesOptions: FastifyRegisterOptions<FastifyCookieOptions> = {
     secret: env.FASTIFY_SECRET_COOKIE,
     hook: "preHandler",
     parseOptions: {
-        domain: "192.168.100.6",
+        domain: env.APP_DOMAIN,
         sameSite: "lax",
         path: "/",
         secure: false,

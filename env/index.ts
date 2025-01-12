@@ -14,6 +14,8 @@ const EnvironmentSchema = z.object({
         })
         .optional()
         .default("development"),
+    APP_NAME: z.string({ required_error: "Configuração obrigatória" }),
+    APP_DOMAIN: z.string({ required_error: "Configuração obrigatória" }),
     FASTIFY_HOST: z.string({ required_error: "Configuração obrigatória" }).default(MY_IP_ADDRESS),
     FASTIFY_PORT: z.string({ required_error: "Configuração obrigatória" }),
     DATABASE_USER: z.string({ required_error: "Configuração obrigatória" }),
