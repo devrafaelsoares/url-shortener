@@ -1,6 +1,5 @@
 import Redis from "ioredis";
 import env from "@env";
-
 class RedisClient {
     private client: Redis | null = null;
 
@@ -11,6 +10,7 @@ class RedisClient {
                 port: env.REDIS_PORT,
                 username: env.REDIS_USERNAME,
                 password: env.REDIS_PASSWORD,
+                tls: {},
             });
             console.log("Console> 🔰 Redis connected");
         }

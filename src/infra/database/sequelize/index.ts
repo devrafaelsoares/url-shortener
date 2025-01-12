@@ -16,6 +16,9 @@ const sequelizeOptionsDevelopmentPostgres: SequelizeOptions = {
     host: env.DATABASE_HOST,
     dialect: "postgres",
     logging: isProduction ? false : console.log,
+    dialectOptions: {
+        ssl: true,
+    },
     timezone: "America/Sao_Paulo",
     models: [Url, UrlLog, User, HashingAlgorithm, VerificationToken],
 };

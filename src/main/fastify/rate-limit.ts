@@ -11,5 +11,6 @@ export const rateLimitOptions: RateLimitPluginOptions = {
         port: env.REDIS_PORT,
         username: env.REDIS_USERNAME,
         password: env.REDIS_PASSWORD,
+        tls: {},
     }),
 };
