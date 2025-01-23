@@ -31,9 +31,11 @@ docker-compose up -d --build
 
 ## Como usar ?
 
-### 📍 Acesse http://localhost:8083/reference
+### 📍 Acesse http://localhost:8083
 
 #### Para ter acesso a documentação da API
+
+### 📍 Acesse http://localhost:8083/reference
 
 ## Contatos
 
