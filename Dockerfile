@@ -2,13 +2,13 @@ FROM node:20.17.0-alpine
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package.json pnpm-lock.yaml ./
 
 RUN npm install -g pnpm
 
 RUN pnpm self-update
 
-RUN pnpm install 
+RUN pnpm install --frozen-lockfile --force
 
 COPY . .
 
