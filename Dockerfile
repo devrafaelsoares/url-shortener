@@ -12,6 +12,6 @@ COPY . .
 
 RUN pnpm run build
 
-COPY src/presentation/templates/* dist/src/presentation/templates/
+COPY src/presentation/templates/* app/dist/src/presentation/templates/
 
 CMD ["pnpm", "run", "prod"]
