@@ -4,11 +4,9 @@ WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9.15.4
 
-RUN pnpm self-update
-
-RUN pnpm install --frozen-lockfile --force
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
