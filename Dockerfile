@@ -8,7 +8,7 @@ RUN npm install -g pnpm
 
 RUN pnpm self-update
 
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile --force
 
 COPY . .
 
