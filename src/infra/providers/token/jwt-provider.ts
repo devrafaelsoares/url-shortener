@@ -25,7 +25,7 @@ export class JwtToken<T extends Record<string, unknown>> implements TokenProvide
             throw new Error("O tempo de expiração deve ser fornecido ao gerar um novo token.");
         }
         this._value = jwt.sign(this.props.payload || {}, this.props.secret, {
-            expiresIn: this.props.expirationTime,
+            expiresIn: parseInt(this.props.expirationTime),
         });
         this._expiresAt = new Date(Date.now() + this.getExpirationInMilliseconds(this.props.expirationTime));
 
