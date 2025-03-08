@@ -42,7 +42,7 @@ export class RevalidateUserUseCase {
 
         const expires = new Date(now.getTime() + durationInSeconds * 1000);
 
-        const token = jwt.sign({ id: userId }, secret, { expiresIn });
+        const token = jwt.sign({ id: userId }, secret, { expiresIn: parseInt(expiresIn) });
 
         return { value: token, expires };
     }
