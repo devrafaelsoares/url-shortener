@@ -29,7 +29,7 @@ async function startServer() {
         console.log(` * Total Memory: ${(systemInfo.memory / 1024 ** 3).toFixed(2)} GB`);
         console.log(` * Free Memory: ${(systemInfo.freeMemory / 1024 ** 3).toFixed(2)} GB\n`);
 
-        await sequelize.sync({ alter: true });
+        await sequelize.sync();
 
         console.log(`\nConsole> 🔰 Database running\n`);
 

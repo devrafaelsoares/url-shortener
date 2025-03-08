@@ -2,7 +2,6 @@ import path from "path";
 import fastify from "fastify";
 import swagger from "@fastify/swagger";
 import swaggerUI from "@fastify/swagger-ui";
-import scalar from "@scalar/fastify-api-reference";
 import Autoload from "@fastify/autoload";
 import rateLimit from "@fastify/rate-limit";
 import cors from "@fastify/cors";
@@ -14,7 +13,6 @@ import fastifyCookie from "@fastify/cookie";
 import routes from "@infra/fastify/routes";
 import { cookiesOptions } from "./cookie";
 import { originsCors } from "./cors";
-import { scalarOptions } from "./scalar";
 
 const app = fastify({ trustProxy: true });
 
@@ -27,7 +25,6 @@ app.register(cors, {
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
 });
-
 app.setErrorHandler(errorHandler);
 
 setNotFoundHandler(app);
@@ -39,7 +36,6 @@ app.register(rateLimit, rateLimitOptions);
 app.register(swagger, swaggerOptions);
 app.register(swaggerUI, swaggerUiOptions);
 
-app.register(scalar, scalarOptions);
 app.register(fastifyCookie, cookiesOptions);
 
 app.register(routes);

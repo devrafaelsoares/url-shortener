@@ -12,35 +12,29 @@ importers:
         specifier: ^5.10.0
         version: 5.10.0
       '@fastify/cookie':
-        specifier: ^11.0.1
+        specifier: ^11.0.2
         version: 11.0.2
       '@fastify/cors':
-        specifier: ^10.0.1
+        specifier: ^10.1.0
         version: 10.1.0
       '@fastify/jwt':
-        specifier: ^9.0.1
+        specifier: ^9.0.4
         version: 9.0.4
       '@fastify/rate-limit':
-        specifier: ^10.0.0
+        specifier: ^10.2.2
         version: 10.2.2
       '@fastify/static':
-        specifier: ^8.0.2
+        specifier: ^8.1.1
         version: 8.1.1
       '@fastify/swagger':
-        specifier: ^9.0.0
+        specifier: ^9.4.2
         version: 9.4.2
       '@fastify/swagger-ui':
-        specifier: ^5.1.0
+        specifier: ^5.2.2
         version: 5.2.2
       '@paralleldrive/cuid2':
         specifier: ^2.2.2
         version: 2.2.2
-      '@prisma/client':
-        specifier: ^5.16.2
-        version: 5.22.0(prisma@5.22.0)
-      '@scalar/fastify-api-reference':
-        specifier: ^1.25.99
-        version: 1.25.130
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -51,22 +45,22 @@ importers:
         specifier: ^7.0.3
         version: 7.0.3
       dayjs:
-        specifier: ^1.11.11
+        specifier: ^1.11.13
         version: 1.11.13
       dotenv:
-        specifier: ^16.4.5
+        specifier: ^16.4.7
         version: 16.4.7
       fastify:
-        specifier: ^5.1.0
+        specifier: ^5.2.1
         version: 5.2.1
       fastify-plugin:
         specifier: ^5.0.1
         version: 5.0.1
       fastify-type-provider-zod:
-        specifier: ^2.0.0
-        version: 2.1.0(fastify@5.2.1)(zod@3.24.2)
+        specifier: ^4.0.2
+        version: 4.0.2(fastify@5.2.1)(zod@3.24.2)
       ioredis:
-        specifier: ^5.4.2
+        specifier: ^5.6.0
         version: 5.6.0
       jsonwebtoken:
         specifier: ^9.0.2
@@ -75,62 +69,59 @@ importers:
         specifier: ^2.2.3
         version: 2.2.3
       mysql2:
-        specifier: ^3.11.3
+        specifier: ^3.13.0
         version: 3.13.0
       nodemailer:
-        specifier: ^6.9.16
+        specifier: ^6.10.0
         version: 6.10.0
       pg:
-        specifier: ^8.12.0
+        specifier: ^8.13.3
         version: 8.13.3
       pg-hstore:
         specifier: ^2.3.4
         version: 2.3.4
       pino-pretty:
-        specifier: ^11.2.1
+        specifier: ^11.3.0
         version: 11.3.0
-      prisma:
-        specifier: ^5.16.2
-        version: 5.22.0
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
       sequelize:
-        specifier: ^6.37.3
+        specifier: ^6.37.6
         version: 6.37.6(mysql2@3.13.0)(pg-hstore@2.3.4)(pg@8.13.3)
       swagger-themes:
         specifier: ^1.4.3
         version: 1.4.3
       uuid:
-        specifier: ^11.0.5
+        specifier: ^11.1.0
         version: 11.1.0
       yarn:
         specifier: ^1.22.22
         version: 1.22.22
       zod:
-        specifier: ^3.23.8
+        specifier: ^3.24.2
         version: 3.24.2
     devDependencies:
       '@faker-js/faker':
-        specifier: ^9.0.1
+        specifier: ^9.6.0
         version: 9.6.0
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
       '@types/jest':
-        specifier: ^29.5.13
+        specifier: ^29.5.14
         version: 29.5.14
       '@types/jsonwebtoken':
-        specifier: ^9.0.7
+        specifier: ^9.0.9
         version: 9.0.9
       '@types/module-alias':
         specifier: ^2.0.4
         version: 2.0.4
       '@types/node':
-        specifier: ^22.10.5
+        specifier: ^22.13.10
         version: 22.13.10
       '@types/nodemailer':
-        specifier: ^6.4.16
+        specifier: ^6.4.17
         version: 6.4.17
       '@types/uuid':
         specifier: ^10.0.0
@@ -139,7 +130,7 @@ importers:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@22.13.10)(ts-node@10.9.2(@types/node@22.13.10)(typescript@5.8.2))
       nodemon:
-        specifier: ^3.1.4
+        specifier: ^3.1.9
         version: 3.1.9
       sequelize-typescript:
         specifier: ^2.1.6
@@ -148,19 +139,19 @@ importers:
         specifier: ^7.0.0
         version: 7.0.0
       ts-jest:
-        specifier: ^29.2.5
+        specifier: ^29.2.6
         version: 29.2.6(@babel/core@7.26.9)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.26.9))(jest@29.7.0(@types/node@22.13.10)(ts-node@10.9.2(@types/node@22.13.10)(typescript@5.8.2)))(typescript@5.8.2)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@types/node@22.13.10)(typescript@5.8.2)
       tsc-alias:
-        specifier: ^1.8.10
+        specifier: ^1.8.11
         version: 1.8.11
       tsx:
-        specifier: ^4.19.1
+        specifier: ^4.19.3
         version: 4.19.3
       typescript:
-        specifier: ^5.6.2
+        specifier: ^5.8.2
         version: 5.8.2
 
 packages:
@@ -665,50 +656,6 @@ packages:
   '@paralleldrive/cuid2@2.2.2':
     resolution: {integrity: sha512-ZOBkgDwEdoYVlSeRbYYXs0S9MejQofiVYoTbKzy/6GQa39/q5tQU2IX46+shYnUkpEl3wc+J6wRlar7r2EK2xA==}
 
-  '@prisma/client@5.22.0':
-    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
-    engines: {node: '>=16.13'}
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-
-  '@prisma/debug@5.22.0':
-    resolution: {integrity: sha512-AUt44v3YJeggO2ZU5BkXI7M4hu9BF2zzH2iF2V5pyXT/lRTyWiElZ7It+bRH1EshoMRxHgpYg4VB6rCM+mG5jQ==}
-
-  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2':
-    resolution: {integrity: sha512-2PTmxFR2yHW/eB3uqWtcgRcgAbG1rwG9ZriSvQw+nnb7c4uCr3RAcGMb6/zfE88SKlC1Nj2ziUvc96Z379mHgQ==}
-
-  '@prisma/engines@5.22.0':
-    resolution: {integrity: sha512-UNjfslWhAt06kVL3CjkuYpHAWSO6L4kDCVPegV6itt7nD1kSJavd3vhgAEhjglLJJKEdJ7oIqDJ+yHk6qO8gPA==}
-
-  '@prisma/fetch-engine@5.22.0':
-    resolution: {integrity: sha512-bkrD/Mc2fSvkQBV5EpoFcZ87AvOgDxbG99488a5cexp5Ccny+UM6MAe/UFkUC0wLYD9+9befNOqGiIJhhq+HbA==}
-
-  '@prisma/get-platform@5.22.0':
-    resolution: {integrity: sha512-pHhpQdr1UPFpt+zFfnPazhulaZYCUqeIcPpJViYoq9R+D/yw4fjE+CtnsnKzPYm0ddUbeXUzjGVGIRVgPDCk4Q==}
-
-  '@scalar/core@0.1.0':
-    resolution: {integrity: sha512-LnszTA7JmdtmEX1qqhkIKTKFQiFstRYiDs0NrXdYtMk/WB55Bnoz0Lk8BWw1qC1NhMpP5It+PRYZke727Gxrbw==}
-    engines: {node: '>=18'}
-
-  '@scalar/fastify-api-reference@1.25.130':
-    resolution: {integrity: sha512-t3dhnzX67vSJG0Mg+1n/7ugj1yahKKDgR5nyWMjY6PnBQIAumA/wqUfGhba2bxoscgKZ+AHOnYjdYBlk8foNtA==}
-    engines: {node: '>=18'}
-
-  '@scalar/openapi-parser@0.10.9':
-    resolution: {integrity: sha512-wsKZtL4B3Fmbv24B1zzeWdsEr6F60fLmToOFLA1b9QGQ6TAtIvLgKQWQ65eh5Vfx93nQb/iekamfErqHRHtEhA==}
-    engines: {node: '>=18'}
-
-  '@scalar/openapi-types@0.1.9':
-    resolution: {integrity: sha512-HQQudOSQBU7ewzfnBW9LhDmBE2XOJgSfwrh5PlUB7zJup/kaRkBGNgV2wMjNz9Af/uztiU/xNrO179FysmUT+g==}
-    engines: {node: '>=18'}
-
-  '@scalar/types@0.0.39':
-    resolution: {integrity: sha512-oAMBWC5B0I8IViCuaV1ydoUAm7KJSwHZfCuLMea15tSKh0/wj9H1KQvDJF8gE/cUVwjQvj4q94GB22kBT4XGNQ==}
-    engines: {node: '>=18'}
-
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
@@ -793,9 +740,6 @@ packages:
   '@types/yargs@17.0.33':
     resolution: {integrity: sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==}
 
-  '@unhead/schema@1.11.20':
-    resolution: {integrity: sha512-0zWykKAaJdm+/Y7yi/Yds20PrUK7XabLe9c3IRcjnwYmSWY6z0Cr19VIs3ozCj8P+GhR+/TI2mwtGlueCEYouA==}
-
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
 
@@ -818,14 +762,6 @@ packages:
   agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
-
-  ajv-draft-04@1.0.0:
-    resolution: {integrity: sha512-mv00Te6nmYbRp5DCwclxtt7yV/joXJPGS7nM+97GdxvuttCOfgI3K4U25zboyeX0O+myI8ERluxQe5wljMmVIw==}
-    peerDependencies:
-      ajv: ^8.5.0
-    peerDependenciesMeta:
-      ajv:
-        optional: true
 
   ajv-formats@3.0.1:
     resolution: {integrity: sha512-8iUql50EUR+uUcdRQ3HDqa6EVyo3docL8g5WJ3FNcWmu62IbkGUue/pEyLBW8VGKKucTPgqeks4fIU1DA4yowQ==}
@@ -1320,16 +1256,13 @@ packages:
     resolution: {integrity: sha512-KH6p+Z8AKPXnmA7+Iz2Lh8ARCMr+8WNPVludm1LGkZoD2MjY6LVnRMtTKhkdzI+jr0RzQWXKzKyBJm1zoHEL4Q==}
     engines: {node: '>=0.10.0'}
 
-  fastify-plugin@4.5.1:
-    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
-
   fastify-plugin@5.0.1:
     resolution: {integrity: sha512-HCxs+YnRaWzCl+cWRYFnHmeRFyR5GVnJTAaCJQiYzQSDwK9MgJdyAsuL3nh0EWRCYMgQ5MeziymvmAhUHYHDUQ==}
 
-  fastify-type-provider-zod@2.1.0:
-    resolution: {integrity: sha512-p0plQyrxVR1IxJaOVbKRkduYh74HAS6Pm2szhFrc/vFdfIEu8UWo/cPFZCrcKyeo8ICjWbHH1zkx8lWw/ivpqg==}
+  fastify-type-provider-zod@4.0.2:
+    resolution: {integrity: sha512-FDRzSL3ZuoZ+4YDevR1YOinmDKkxOdy3QB9dDR845sK+bQvDroPKhHAXLEAOObDxL7SMA0OZN/A4osrNBTdDTQ==}
     peerDependencies:
-      fastify: ^4.0.0
+      fastify: ^5.0.0
       zod: ^3.14.2
 
   fastify@5.2.1:
@@ -1423,9 +1356,6 @@ packages:
   get-tsconfig@4.10.0:
     resolution: {integrity: sha512-kGzZ3LWWQcGIAmg6iWvXn0ei6WDtV26wzHRMwDSzmAbcXrTEXxHy6IehI6/4eT6VRKyMP1eF1VqwrVUmE/LR7A==}
 
-  github-slugger@2.0.0:
-    resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
-
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
@@ -1487,9 +1417,6 @@ packages:
   hexoid@2.0.0:
     resolution: {integrity: sha512-qlspKUK7IlSQv2o+5I7yhUd7TxlOG2Vr5LTa3ve2XSNVKAL/n/u/7KLvKmFNimomDIKvZFXWHv0T12mv7rT8Aw==}
     engines: {node: '>=8'}
-
-  hookable@5.5.3:
-    resolution: {integrity: sha512-Yc+BQe8SvoXH1643Qez1zqLRmbA5rCL+sSmk6TVos0LWVfNIB7PGncdlId77WzLGSIB5KaWgTaNTs2lNVEI6VQ==}
 
   html-escaper@2.0.2:
     resolution: {integrity: sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==}
@@ -1791,10 +1718,6 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  jsonpointer@5.0.1:
-    resolution: {integrity: sha512-p/nXbhSEcu3pZRdkW1OfJhpsVtW1gd4Wa1fnQc9YLiTfAjn0312eMKimbdIQzuZl9aa9xUGaRlP9T/CJE/ditQ==}
-    engines: {node: '>=0.10.0'}
-
   jsonwebtoken@9.0.2:
     resolution: {integrity: sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==}
     engines: {node: '>=12', npm: '>=6'}
@@ -1812,10 +1735,6 @@ packages:
   leven@3.1.0:
     resolution: {integrity: sha512-qsda+H8jTaUaN/x5vzW2rzc+8Rw4TAQ/4KjB46IwK5VH+IlVeeeje/EoZRpiXvIqjFgK84QffqPztGI3VBLG1A==}
     engines: {node: '>=6'}
-
-  leven@4.0.0:
-    resolution: {integrity: sha512-puehA3YKku3osqPlNuzGDUHq8WpwXupUg1V6NXdV38G+gr+gkBwFC8g1b/+YcIvp8gnqVIus+eJCH/eGsRmJNw==}
-    engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
   light-my-request@6.6.0:
     resolution: {integrity: sha512-CHYbu8RtboSIoVsHZ6Ye4cj4Aw/yg2oAFimlF7mNvfDV192LR7nDiKtSIfCuLT7KokPSTn/9kfVLm5OGN0A28A==}
@@ -2212,11 +2131,6 @@ packages:
   pretty-format@29.7.0:
     resolution: {integrity: sha512-Pdlw/oPxN+aXdmM9R00JVC9WVFoCLTKJvDVLgmJ+qAffBMxsV85l/Lu7sNx4zSzPyoL2euImuEwHhOXdEgNFZQ==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  prisma@5.22.0:
-    resolution: {integrity: sha512-vtpjW3XuYCSnMsNVBjLMNkTj6OZbudcPPTPYHqX0CJfpcdWciI1dM8uHETwmDxxiqEwCIE6WvXucWUetJgfu/A==}
-    engines: {node: '>=16.13'}
-    hasBin: true
 
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
@@ -2797,9 +2711,6 @@ packages:
   yocto-queue@0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
-
-  zhead@2.2.4:
-    resolution: {integrity: sha512-8F0OI5dpWIA5IGG5NHUg9staDwz/ZPxZtvGVf01j7vHqSyZ0raHY+78atOVxRqb73AotX22uV1pXt3gYSstGag==}
 
   zod-to-json-schema@3.24.3:
     resolution: {integrity: sha512-HIAfWdYIt1sssHfYZFCXp4rU1w2r8hVVXYIlmoa0r0gABLs5di3RCqPU5DDROogVz1pAdYBaz7HK5n9pSUNs3A==}
@@ -3410,60 +3321,6 @@ snapshots:
     dependencies:
       '@noble/hashes': 1.7.1
 
-  '@prisma/client@5.22.0(prisma@5.22.0)':
-    optionalDependencies:
-      prisma: 5.22.0
-
-  '@prisma/debug@5.22.0': {}
-
-  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2': {}
-
-  '@prisma/engines@5.22.0':
-    dependencies:
-      '@prisma/debug': 5.22.0
-      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
-      '@prisma/fetch-engine': 5.22.0
-      '@prisma/get-platform': 5.22.0
-
-  '@prisma/fetch-engine@5.22.0':
-    dependencies:
-      '@prisma/debug': 5.22.0
-      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
-      '@prisma/get-platform': 5.22.0
-
-  '@prisma/get-platform@5.22.0':
-    dependencies:
-      '@prisma/debug': 5.22.0
-
-  '@scalar/core@0.1.0':
-    dependencies:
-      '@scalar/types': 0.0.39
-
-  '@scalar/fastify-api-reference@1.25.130':
-    dependencies:
-      '@scalar/core': 0.1.0
-      '@scalar/openapi-parser': 0.10.9
-      '@scalar/openapi-types': 0.1.9
-      fastify-plugin: 4.5.1
-      github-slugger: 2.0.0
-
-  '@scalar/openapi-parser@0.10.9':
-    dependencies:
-      ajv: 8.17.1
-      ajv-draft-04: 1.0.0(ajv@8.17.1)
-      ajv-formats: 3.0.1(ajv@8.17.1)
-      jsonpointer: 5.0.1
-      leven: 4.0.0
-      yaml: 2.7.0
-
-  '@scalar/openapi-types@0.1.9': {}
-
-  '@scalar/types@0.0.39':
-    dependencies:
-      '@scalar/openapi-types': 0.1.9
-      '@unhead/schema': 1.11.20
-      zod: 3.24.2
-
   '@sinclair/typebox@0.27.8': {}
 
   '@sinonjs/commons@3.0.1':
@@ -3559,11 +3416,6 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@unhead/schema@1.11.20':
-    dependencies:
-      hookable: 5.5.3
-      zhead: 2.2.4
-
   abbrev@1.1.1: {}
 
   abort-controller@3.0.0:
@@ -3583,10 +3435,6 @@ snapshots:
       debug: 4.4.0(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
-
-  ajv-draft-04@1.0.0(ajv@8.17.1):
-    optionalDependencies:
-      ajv: 8.17.1
 
   ajv-formats@3.0.1(ajv@8.17.1):
     optionalDependencies:
@@ -4097,12 +3945,11 @@ snapshots:
     dependencies:
       reusify: 1.1.0
 
-  fastify-plugin@4.5.1: {}
-
   fastify-plugin@5.0.1: {}
 
-  fastify-type-provider-zod@2.1.0(fastify@5.2.1)(zod@3.24.2):
+  fastify-type-provider-zod@4.0.2(fastify@5.2.1)(zod@3.24.2):
     dependencies:
+      '@fastify/error': 4.0.0
       fastify: 5.2.1
       zod: 3.24.2
       zod-to-json-schema: 3.24.3(zod@3.24.2)
@@ -4237,8 +4084,6 @@ snapshots:
     dependencies:
       resolve-pkg-maps: 1.0.0
 
-  github-slugger@2.0.0: {}
-
   glob-parent@5.1.2:
     dependencies:
       is-glob: 4.0.3
@@ -4304,8 +4149,6 @@ snapshots:
   help-me@5.0.0: {}
 
   hexoid@2.0.0: {}
-
-  hookable@5.5.3: {}
 
   html-escaper@2.0.2: {}
 
@@ -4790,8 +4633,6 @@ snapshots:
 
   json5@2.2.3: {}
 
-  jsonpointer@5.0.1: {}
-
   jsonwebtoken@9.0.2:
     dependencies:
       jws: 3.2.2
@@ -4819,8 +4660,6 @@ snapshots:
   kleur@3.0.3: {}
 
   leven@3.1.0: {}
-
-  leven@4.0.0: {}
 
   light-my-request@6.6.0:
     dependencies:
@@ -5184,12 +5023,6 @@ snapshots:
       '@jest/schemas': 29.6.3
       ansi-styles: 5.2.0
       react-is: 18.3.1
-
-  prisma@5.22.0:
-    dependencies:
-      '@prisma/engines': 5.22.0
-    optionalDependencies:
-      fsevents: 2.3.3
 
   process-nextick-args@2.0.1: {}
 
@@ -5734,8 +5567,6 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
-
-  zhead@2.2.4: {}
 
   zod-to-json-schema@3.24.3(zod@3.24.2):
     dependencies:
