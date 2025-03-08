@@ -24,7 +24,9 @@
         "target": "es6",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
-        "typeRoots": ["node_modules/@types", "src/presentation/types"]
+        "typeRoots": ["node_modules/@types", "src/presentation/types"],
+        "skipLibCheck": true,
+        "noEmitOnError": false
     },
     "include": ["src/**/*", "env", ".env.production"]
 }
