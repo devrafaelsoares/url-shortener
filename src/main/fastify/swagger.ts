@@ -18,7 +18,7 @@ export const swaggerOptions: SwaggerOptions = {
                 url: "https://devrafaelsoares.com.br",
             },
         },
-        host: "https://url-shortener-lizh.onrender.com",
+        host: "url-shortener-lizh.onrender.com",
         schemes: ["https"],
         consumes: ["application/json"],
         produces: ["application/json"],
