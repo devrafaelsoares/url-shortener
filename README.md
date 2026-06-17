@@ -17,7 +17,7 @@
 
 #### ⚠️ Será necessário ter instalado em seu sistema operacional o Docker
 
-#### Dentro da pasta do projeto renomeei o arquivo `.env.example` para `.env` e preencha as informações do seu provedor de email.
+#### Dentro da pasta do projeto renomeie o arquivo `.env.example` para `.env` e preencha as informações do seu provedor de email.
 
 #### Logo após, dentro da pasta do projeto, execute os seguintes comandos:
 
@@ -27,7 +27,7 @@
 docker-compose up -d --build
 ```
 
-#### ⚠️ Verifique antes se existe algum processo esteje rodando em background na porta especificada para uso do contâiner, caso tenha encerre este processo
+#### ⚠️ Verifique antes se existe algum processo esteja rodando em background na porta especificada para uso do contêiner, caso tenha encerre este processo
 
 ## Como usar ?
 
@@ -45,17 +45,16 @@ docker-compose up -d --build
 [contributors-url]: https://github.com/devrafaelsoares/url-shortener/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/devrafaelsoares/url-shortener.svg?style=for-the-badge
 [forks-url]: https://github.com/devrafaelsoares/url-shortener/network/members
-[stars-shield]: https://img.shields.io/github/stars/github-profiles-app/react-countdown.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/devrafaelsoares/url-shortener.svg?style=for-the-badge
 [stars-url]: https://github.com/devrafaelsoares/url-shortener/stargazers
 [issues-shield]: https://img.shields.io/github/issues/devrafaelsoares/url-shortener.svg?style=for-the-badge
 [issues-url]: https://github.com/devrafaelsoares/url-shortener/issues
 [license-shield]: https://img.shields.io/github/license/devrafaelsoares/url-shortener.svg?style=for-the-badge
 [license-url]: https://github.com/devrafaelsoares/url-shortener/blob/master/LICENSE
-[license-url]: https://github.com/devrafaelsoares/url-shortner/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
 [linkedin-url]: https://www.linkedin.com/in/rafael-henrique-soares-de-freitas-2a667a23a/
 [gmail-shield]: https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white
 [gmail-url]: mailto:rafael.soares.developer@gmail.com
 [me-portfolio-shield]: https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white
-[me-portfolio-url]: https://devrafaelsoares.vercel.app
+[me-portfolio-url]: https://devrafaelsoares.com.br
 [nlw-journey-thumb]: ./docs/nlw-journey.png
