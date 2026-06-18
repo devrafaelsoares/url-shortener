@@ -16,6 +16,7 @@ import {
     FindShortUrlUseCase,
 } from "@domain/usecases/url";
 import { ToBase62 } from "@infra/providers/to-base";
+import { BlacklistSafeBrowsing } from "@infra/providers/safe-browsing";
 import {
     CreateShortUrlControllerFastify,
     FindAllUrlsByUserControllerFastify,
@@ -40,6 +41,7 @@ const urlLogValidatorSimple = new UrlLogValidatorSimple();
 const cuid2IdProvider = new Cuid2IdProvider();
 const toBase62Provider = new ToBase62();
 const uuidv4IdProvider = new UuidV4IdProvider();
+const blacklistSafeBrowsing = new BlacklistSafeBrowsing();
 
 const createShortUrlUseCase = new CreateShortUrlUseCase({
     idProvider: cuid2IdProvider,
@@ -48,6 +50,7 @@ const createShortUrlUseCase = new CreateShortUrlUseCase({
     urlValidator: urlValidatorSimple,
     urlRepository: urlSequelizeRepository,
     userRepository: userSequelizeRepository,
+    safeBrowsingProvider: blacklistSafeBrowsing,
 });
 
 const findOriginalUrlUseCase = new FindOriginalUrlUseCase({
@@ -72,18 +75,21 @@ const findAllUrlsByUserControllerFastify = new FindAllUrlsByUserControllerFastif
     findAllUrlsByUserUseCase,
 });
 
-export default async function userRoutesFastify(fastify: FastifyInstance) {
+export default async function urlRoutesFastify(fastify: FastifyInstance) {
     fastify
         .withTypeProvider<ZodTypeProvider>()
         .post(
             "/urls",
             { schema: CreateUrlSchema, preHandler: authMiddleware.execute.bind(authMiddleware) },
-            fastifyAdapterRoute(createShortControllerFastify)
+            fastifyAdapterRoute(createShortControllerFastify),
         )
         .get(
-            "/urls/user/:user_id",
-            { schema: FindAllUrlsSchema },
-            fastifyAdapterRoute(findAllUrlsByUserControllerFastify)
+            "/urls/me",
+            {
+                schema: FindAllUrlsSchema,
+                preHandler: authMiddleware.execute.bind(authMiddleware),
+            },
+            fastifyAdapterRoute(findAllUrlsByUserControllerFastify),
         )
         .get("/urls/:id", { schema: FindShortUrlSchema }, fastifyAdapterRoute(findShortUrlControllerFastify))
         .get("/:short_url", { schema: FindOriginalUrlSchema }, fastifyAdapterRoute(findOriginalUrlControllerFastify));

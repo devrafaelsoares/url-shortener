@@ -21,7 +21,7 @@ export type CreateUrlRequestProps = {
 
 export type CreateUrlRequestUseCaseProps = {
     original_url: string;
-    token?: string;
+    authenticatedUserId?: string;
 };
 
 export type FindOriginalUrlRequestProps = {

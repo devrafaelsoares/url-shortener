@@ -12,8 +12,8 @@ export class CreateShortUrlControllerFastify implements Controller<FastifyReques
 
     async handle(request: FastifyRequest<{ Body: CreateUrlRequestProps }>): Promise<HttpResponse | void> {
         const { original_url } = request.body;
-        const token = request.cookies["API_AUTH"];
-        const createdUrlResult = await this.props.createShortUrlUseCase.execute({ original_url, token });
+        const authenticatedUserId = request.authenticatedUserId;
+        const createdUrlResult = await this.props.createShortUrlUseCase.execute({ original_url, authenticatedUserId });
 
         const moment = new Date();
 
