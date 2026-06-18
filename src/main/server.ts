@@ -41,8 +41,10 @@ async function startServer() {
                 process.exit(1);
             } else {
                 console.log(`\nConsole> 🔰 Server running: ${address}`);
-                app.swagger();
-                console.log(`Console> 🔰 Swagger running: ${address + "/docs"} \n`);
+                if (env.NODE_ENV !== "production") {
+                    app.swagger();
+                    console.log(`Console> 🔰 Swagger running: ${address + "/docs"} \n`);
+                }
             }
         });
     } catch (err) {

@@ -46,13 +46,21 @@ export class RevalidateUserControllerFastify implements Controller<FastifyReques
         return {
             success: true,
             moment,
-            data: value,
+            data: { 
+                message: "Sessão renovada com sucesso" 
+            },
             status_code: HttpStatus.OK,
             cookies: [
                 {
                     name: "API_AUTH",
                     value,
-                    options: { expires, httpOnly: true },
+                    options: {
+                        path: "/",
+                        httpOnly: true,
+                        secure: process.env.NODE_ENV === "production",
+                        sameSite: "strict",
+                        expires,
+                    },
                 },
             ],
         };

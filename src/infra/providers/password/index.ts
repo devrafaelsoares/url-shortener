@@ -1,1 +1,1 @@
-export * from "./bcrypt-provider";
+export * from "./argon2-provider";

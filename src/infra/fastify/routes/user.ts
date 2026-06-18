@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import env from "@env";
+import env, { jwtKeys } from "@env";
 import { fastifyAdapterRoute } from "@presentation/adpaters";
 import {
     AccountConfirmSchema,
@@ -14,7 +14,7 @@ import {
     UserValidateSchema,
 } from "@infra/fastify/schemas/user";
 import { UserValidatorSimple } from "@domain/validators";
-import { BcryptPasswordProvider } from "@infra/providers/password";
+import { Argon2PasswordProvider } from "@infra/providers/password";
 import { Cuid2IdProvider } from "@infra/providers/id";
 import {
     ConfirmAccountUserUseCase,
@@ -38,7 +38,7 @@ import {
     SendConfirmationAccountControllerFastify,
     SendRecoverPasswordControllerFastify,
 } from "@infra/fastify/controllers/user";
-import { JwtToken } from "@infra/providers/token";
+import { JwtToken, JwtAsymmetricAuthProvider } from "@infra/providers/token";
 import { SendUserConfirmationEmailUseCase, SendUserRecoverPasswordUseCase } from "@domain/usecases/email";
 import { NodemailerService } from "@infra/email/nodemailer";
 import {
@@ -50,29 +50,53 @@ import {
 import { AuthMiddleware } from "@infra/middlewares";
 import { SendEmail } from "@domain/entities";
 
+// --- Repositories ---
 const userSequelizeRepository = new UserSequelizeRepository();
 const userRedisRepository = new UserRedisRepository();
 const verificationTokenSequelizeRepository = new VerificationTokenSequelizeRepository();
 const verificationTokenRedisRepository = new VerificationTokenRedisRepository();
+
+// --- Providers ---
 const userValidatorSimple = new UserValidatorSimple();
-const bcryptPasswordProvider = new BcryptPasswordProvider();
+const argon2PasswordProvider = new Argon2PasswordProvider();
 const cuid2IdProvider = new Cuid2IdProvider();
+
 const userEmailVerification = new JwtToken({
     secret: env.SECRET_KEY_TOKEN,
     expirationTime: env.TOKEN_ACCOUNT_CONFIRMATION_DURATION,
 });
-const nodemailerSerivce = new NodemailerService();
 
-const sendingEmailUserEmailConfirmationUseCase = new SendUserConfirmationEmailUseCase({
-    emailService: nodemailerSerivce,
+const jwtAuthProvider = new JwtAsymmetricAuthProvider({
+    access: {
+        privateKey: jwtKeys.accessPrivateKey,
+        publicKey: jwtKeys.accessPublicKey,
+        expirationTime: env.TOKEN_DURATION,
+    },
+    refresh: {
+        privateKey: jwtKeys.refreshPrivateKey,
+        publicKey: jwtKeys.refreshPublicKey,
+        expirationTime: env.REFRESH_TOKEN_DURATION,
+    },
 });
 
-const sendingEmailUserRecoverPasswordUseCase = new SendUserRecoverPasswordUseCase({ emailService: nodemailerSerivce });
+// --- Email ---
+const nodemailerService = new NodemailerService();
 
+const sendingEmailUserEmailConfirmationUseCase = new SendUserConfirmationEmailUseCase({
+    emailService: nodemailerService,
+    emailFrom: env.EMAIL_FROM,
+});
+
+const sendingEmailUserRecoverPasswordUseCase = new SendUserRecoverPasswordUseCase({
+    emailService: nodemailerService,
+    emailFrom: env.EMAIL_FROM,
+});
+
+// --- Use Cases ---
 const registerUserUseCase = new RegisterUserUseCase({
     userRepository: userSequelizeRepository,
     userValidator: userValidatorSimple,
-    passwordProvider: bcryptPasswordProvider,
+    passwordProvider: argon2PasswordProvider,
     idProvider: cuid2IdProvider,
     tokenProvider: userEmailVerification,
     sendEmailUserEmailConfirmation: sendingEmailUserEmailConfirmationUseCase,
@@ -82,7 +106,8 @@ const registerUserUseCase = new RegisterUserUseCase({
 const loginUserUseCase = new LoginUserUseCase({
     userRepository: userSequelizeRepository,
     userMemoryRepository: userRedisRepository,
-    passwordProvider: bcryptPasswordProvider,
+    passwordProvider: argon2PasswordProvider,
+    jwtAuthProvider,
     loginUserUseCaseConfig: { blockDuration: 300, maxLoginAttempts: 5 },
 });
 
@@ -91,8 +116,8 @@ const confirmAccountUserUseCase = new ConfirmAccountUserUseCase({
     userRepository: userSequelizeRepository,
 });
 
-const revalidateUserUseCase = new RevalidateUserUseCase();
-const validateUserUseCase = new ValidateUserUseCase();
+const revalidateUserUseCase = new RevalidateUserUseCase({ jwtAuthProvider });
+const validateUserUseCase = new ValidateUserUseCase({ jwtAuthProvider });
 
 const sendConfirmationAccountUseCase = new SendConfirmationAccountUserUseCase({
     userRepository: userSequelizeRepository,
@@ -122,9 +147,10 @@ const confirmRecoverPasswordUseCase = new ConfirmRecoverPasswordUserUseCase({
 const recoverChangePasswordUseCase = new RecoverChangePasswordUseCase({
     userRepository: userSequelizeRepository,
     verificationTokenRepository: verificationTokenSequelizeRepository,
-    passwordProvider: bcryptPasswordProvider,
+    passwordProvider: argon2PasswordProvider,
 });
 
+// --- Controllers ---
 const registerUserControllerFastify = new RegisterUserControllerFastify({ registerUserUseCase });
 const confirmUserControllerFastify = new ConfirmAccountControllerFastify({ confirmAccountUserUseCase });
 const loginUserControllerFastify = new LoginUserControllerFastify({ loginUserUseCase });
@@ -141,57 +167,46 @@ const recoverChangePasswordControllerFastify = new RecoverChangePasswordControll
     recoverChangePasswordUseCase,
 });
 
-export const authMiddleware = new AuthMiddleware({ userRepository: userSequelizeRepository });
+// --- Auth Middleware ---
+export const authMiddleware = new AuthMiddleware({
+    userRepository: userSequelizeRepository,
+    jwtAuthProvider,
+});
 
+// --- Routes ---
 export default async function userRoutesFastify(fastify: FastifyInstance) {
     fastify
         .withTypeProvider<ZodTypeProvider>()
         .post("/register", { schema: UserRegisterSchema }, fastifyAdapterRoute(registerUserControllerFastify))
-        .post(
-            "/confirm-account",
-            {
-                schema: AccountConfirmSchema,
-            },
-            fastifyAdapterRoute(confirmUserControllerFastify)
-        )
-        .post(
-            "/login",
-            {
-                schema: UserLoginSchema,
-            },
-            fastifyAdapterRoute(loginUserControllerFastify)
-        )
-
-        .get("/validate-user", { schema: UserValidateSchema }, fastifyAdapterRoute(validateUserControllerFasify))
+        .post("/confirm-account", { schema: AccountConfirmSchema }, fastifyAdapterRoute(confirmUserControllerFastify))
+        .post("/login", { schema: UserLoginSchema }, fastifyAdapterRoute(loginUserControllerFastify))
         .post(
             "/revalidate-user",
-            {
-                schema: UserRevalidateSchema,
-            },
-            fastifyAdapterRoute(revalidateUserControllerFastify)
-        )
-        .post(
-            "/send-confirmation-account",
-            {
-                schema: UserSendConfirmationAccountSchema,
-            },
-            fastifyAdapterRoute(sendConfirmationAccountControllerFastify)
+            { schema: UserRevalidateSchema },
+            fastifyAdapterRoute(revalidateUserControllerFastify),
         )
         .post(
             "/send-recover-password",
-            {
-                schema: UserSendRecoverPasswordSchema,
-            },
-            fastifyAdapterRoute(sendRecoverPasswordControllerFastify)
+            { schema: UserSendRecoverPasswordSchema },
+            fastifyAdapterRoute(sendRecoverPasswordControllerFastify),
         )
         .post(
             "/confirm-recover-password",
             { schema: UserConfirmRecoverPasswordSchema },
-            fastifyAdapterRoute(confirmRecoverPasswordControllerFastify)
+            fastifyAdapterRoute(confirmRecoverPasswordControllerFastify),
         )
         .post(
             "/change-password",
             { schema: UserChangePasswordSchema },
-            fastifyAdapterRoute(recoverChangePasswordControllerFastify)
+            fastifyAdapterRoute(recoverChangePasswordControllerFastify),
+        )
+        .get("/validate-user", { schema: UserValidateSchema }, fastifyAdapterRoute(validateUserControllerFasify))
+        .post(
+            "/send-confirmation-account",
+            {
+                schema: UserSendConfirmationAccountSchema,
+                preHandler: authMiddleware.execute.bind(authMiddleware),
+            },
+            fastifyAdapterRoute(sendConfirmationAccountControllerFastify),
         );
 }

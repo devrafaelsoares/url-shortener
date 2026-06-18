@@ -44,9 +44,8 @@ export class LoginUserControllerFastify implements Controller<FastifyRequest> {
             success: true,
             moment,
             data: {
-                token: token.value,
-                refresh_token: refresh_token.value,
-                user_id,
+                message: "Autenticação realizada com sucesso",
+                user_id, // Identificador seguro para o frontend saber quem logou
             },
             status_code: HttpStatus.OK,
             cookies: [
@@ -54,7 +53,10 @@ export class LoginUserControllerFastify implements Controller<FastifyRequest> {
                     name: "API_AUTH",
                     value: token.value,
                     options: {
+                        path: "/",
                         httpOnly: true,
+                        secure: process.env.NODE_ENV === "production",
+                        sameSite: "strict",
                         expires: token.expires,
                     },
                 },
@@ -62,7 +64,10 @@ export class LoginUserControllerFastify implements Controller<FastifyRequest> {
                     name: "REFRESH_TOKEN",
                     value: refresh_token.value,
                     options: {
+                        path: "/",
                         httpOnly: true,
+                        secure: process.env.NODE_ENV === "production",
+                        sameSite: "strict",
                         expires: refresh_token.expires,
                     },
                 },
@@ -70,7 +75,10 @@ export class LoginUserControllerFastify implements Controller<FastifyRequest> {
                     name: "USER_ID",
                     value: user_id,
                     options: {
+                        path: "/",
                         httpOnly: true,
+                        secure: process.env.NODE_ENV === "production",
+                        sameSite: "strict",
                     },
                 },
             ],

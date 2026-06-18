@@ -1,4 +1,4 @@
-import { PasswordProvider } from "@domain/protocols/providers";
+import { PasswordProvider, JwtAuthProvider } from "@domain/protocols/providers";
 import { Either, error, success, TimeUtils } from "@/helpers";
 import { ErrorMessages, UnauthorizedEntityError } from "@presentation/errors";
 import { HttpStatus } from "@presentation/protocols";
@@ -7,10 +7,7 @@ import {
     LoginUserRequestProps,
     LoginUserResponseProps,
     LoginUserResponseTokenProps,
-    PayloadUserProps,
 } from "@presentation/adpaters/user";
-import env from "@env";
-import { JwtToken } from "@infra/providers/token";
 
 type LoginUserUseCaseConfigProps = {
     readonly maxLoginAttempts: number;
@@ -21,6 +18,7 @@ type LoginUserUseCaseProps = {
     readonly userRepository: UserRepository;
     readonly userMemoryRepository: UserMemoryRepository;
     readonly passwordProvider: PasswordProvider;
+    readonly jwtAuthProvider: JwtAuthProvider;
     readonly loginUserUseCaseConfig: LoginUserUseCaseConfigProps;
 };
 
@@ -61,9 +59,8 @@ export class LoginUserUseCase {
 
         await this.props.userMemoryRepository.removeAttemptLock(LOGIN_ATTEMPTS_KEY);
 
-        const tokenData = this.generateToken(foundUser.id, env.SECRET_KEY_AUTH, env.TOKEN_DURATION);
-
-        const refreshTokenData = this.generateToken(foundUser.id, env.SECRET_KEY_AUTH, env.REFRESH_TOKEN_DURATION);
+        const tokenData = this.generateToken(foundUser.id, "access");
+        const refreshTokenData = this.generateToken(foundUser.id, "refresh");
 
         return success({
             token: tokenData,
@@ -72,20 +69,9 @@ export class LoginUserUseCase {
         });
     }
 
-    private generateToken(userId: string, secret: string, expiresIn: string): LoginUserResponseTokenProps {
-        const now = new Date();
-        const durationInSeconds = TimeUtils.parseDuration(expiresIn);
-        if (!durationInSeconds) {
-            throw new Error("Invalid expiresIn format");
-        }
-
-        const expires = new Date(now.getTime() + durationInSeconds * 1000);
-
-        const jwtToken = new JwtToken<PayloadUserProps>({ secret, payload: { id: userId }, expirationTime: expiresIn });
-
-        const { token } = jwtToken.generate();
-
-        return { value: token, expires };
+    private generateToken(userId: string, type: "access" | "refresh"): LoginUserResponseTokenProps {
+        const { token, expiresAt } = this.props.jwtAuthProvider.sign({ id: userId }, type);
+        return { value: token, expires: expiresAt };
     }
 
     private async handleFailedAttempt(attemptsKey: string, blockKey: string): Promise<void> {
