@@ -58,7 +58,7 @@ export class Url implements UrlProps {
             expiresAt: props.expiresAt ?? null,
             hitCount: props.hitCount ?? 0,
             createdAt: props.createdAt ?? date,
-            updatedAt: props.createdAt ?? date,
+            updatedAt: props.updatedAt ?? date,
         };
     }
 

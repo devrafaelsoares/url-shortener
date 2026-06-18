@@ -1,16 +1,13 @@
 import { Url, UrlPropsCreate } from "@domain/entities";
 import { UrlMapper } from "@domain/mappers";
-import { IdProvider, ToBaseProvider } from "@domain/protocols/providers";
+import { IdProvider, ToBaseProvider, SafeBrowsingProvider } from "@domain/protocols/providers";
 import { UrlRepository, UserRepository } from "@domain/protocols/repositories";
 import { ValidationError, Validator } from "@domain/protocols/validators";
 import { Either, error, success } from "@/helpers";
 import { UrlShortenerToBase } from "@infra/providers/url-shortener";
 import { CreateUrlRequestUseCaseProps, UrlResponseProps } from "@presentation/adpaters";
-import { ErrorMessages, ExistsEntityError, NotFoundEntityError, UnauthorizedEntityError } from "@presentation/errors";
+import { ErrorMessages, ExistsEntityError, NotFoundEntityError, UnauthorizedEntityError, BadRequestEntityError } from "@presentation/errors";
 import { HttpStatus } from "@presentation/protocols";
-import { PayloadUserProps } from "@presentation/adpaters/user";
-import { JwtToken } from "@infra/providers/token";
-import env from "@env";
 
 type CreateShortUrlUseCaseProps = {
     readonly idProvider: IdProvider;
@@ -19,6 +16,7 @@ type CreateShortUrlUseCaseProps = {
     readonly urlValidator: Validator<UrlPropsCreate>;
     readonly urlRepository: UrlRepository;
     readonly userRepository: UserRepository;
+    readonly safeBrowsingProvider: SafeBrowsingProvider;
 };
 
 export class CreateShortUrlUseCase {
@@ -26,24 +24,23 @@ export class CreateShortUrlUseCase {
 
     async execute({
         original_url,
-        token,
+        authenticatedUserId,
     }: CreateUrlRequestUseCaseProps): Promise<
         Either<
-            ValidationError<UrlPropsCreate>[] | ExistsEntityError | UnauthorizedEntityError | NotFoundEntityError,
+            ValidationError<UrlPropsCreate>[] | ExistsEntityError | UnauthorizedEntityError | NotFoundEntityError | BadRequestEntityError,
             UrlResponseProps
         >
     > {
-        if (!token) {
+        if (!authenticatedUserId) {
             return error(new UnauthorizedEntityError(ErrorMessages.ACCESS_DENIED, HttpStatus.UNAUTHORIZED));
         }
 
-        const { payload } = new JwtToken<PayloadUserProps>({ secret: env.SECRET_KEY_AUTH, token });
-
-        if (!payload) {
-            return error(new UnauthorizedEntityError(ErrorMessages.ACCESS_DENIED, HttpStatus.UNAUTHORIZED));
+        const isSafe = await this.props.safeBrowsingProvider.isSafe(original_url);
+        if (!isSafe) {
+            return error(new BadRequestEntityError("A URL fornecida foi identificada como maliciosa ou não segura.", HttpStatus.BAD_REQUEST));
         }
 
-        const foundUser = await this.props.userRepository.findById(payload.id);
+        const foundUser = await this.props.userRepository.findById(authenticatedUserId);
 
         if (!foundUser) {
             return error(new NotFoundEntityError(ErrorMessages.NOT_EXISTS_USER, HttpStatus.NOT_FOUND));
@@ -73,14 +70,17 @@ export class CreateShortUrlUseCase {
 
         const url = urlResult.value;
 
-        const foundUrl = await this.props.urlRepository.findByShortUrl(url.shortUrl);
-
-        if (foundUrl) {
-            return error(new ExistsEntityError(ErrorMessages.EXISTS_URL, HttpStatus.CONFLIT));
+        try {
+            const createdUrl = await this.props.urlRepository.create(url);
+            return success(UrlMapper.toHttpResponse(createdUrl));
+        } catch (errorObj: any) {
+            // AppSec & Infra: Eliminamos o Anti-Pattern "Check-Then-Act" (SELECT -> INSERT)
+            // Agora confiamos no Unique Constraint do Banco (Race Condition mitigated)
+            // Se houver colisão de Hash, o banco grita e mapeamos o erro de forma segura.
+            if (errorObj?.name === "SequelizeUniqueConstraintError" || errorObj?.message?.includes("unique")) {
+                return error(new ExistsEntityError(ErrorMessages.EXISTS_URL, HttpStatus.CONFLIT));
+            }
+            throw errorObj;
         }
-
-        const createdUrl = await this.props.urlRepository.create(url);
-
-        return success(UrlMapper.toHttpResponse(createdUrl));
     }
 }

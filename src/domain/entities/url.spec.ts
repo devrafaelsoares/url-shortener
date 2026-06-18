@@ -5,7 +5,7 @@ import { Url, UrlPropsCreate } from "./url";
 import { UrlShortenerToBase } from "@infra/providers/url-shortener";
 import { UrlValidatorSimple } from "@domain/validators";
 import { UserFactory } from "@domain/factories";
-import { BcryptPasswordProvider } from "@infra/providers/password";
+import { Argon2PasswordProvider } from "@infra/providers/password";
 import { User } from "./user";
 
 describe("Url", () => {
@@ -23,7 +23,7 @@ describe("Url", () => {
         toBaseProvider = new ToBase62();
         currentDate = new Date();
         urlValidatorSimple = new UrlValidatorSimple();
-        passwordProvider = new BcryptPasswordProvider();
+        passwordProvider = new Argon2PasswordProvider();
         userFactory = new UserFactory(idProvider, { provider: passwordProvider });
     });
 
