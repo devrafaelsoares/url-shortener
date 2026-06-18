@@ -23,6 +23,8 @@
         "target": "es6",
         "experimentalDecorators": true,
         "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "types": ["node", "jest"],
         "typeRoots": ["node_modules/@types", "src/presentation/types"],
         "skipLibCheck": true,
         "noEmitOnError": false

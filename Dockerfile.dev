@@ -1,0 +1,18 @@
+# ============================================
+# Development Dockerfile — Hot Reload com tsx
+# ============================================
+FROM node:20.17.0-alpine
+
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN npm install -g pnpm@9.15.4
+
+RUN pnpm install --frozen-lockfile
+
+COPY . .
+
+EXPOSE 8080
+
+CMD ["pnpm", "run", "dev"]
