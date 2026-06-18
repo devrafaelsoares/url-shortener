@@ -1,60 +1,125 @@
-# URL Shortener - Server
+<p align="center">
+  <img src="https://img.shields.io/badge/Node.js-22-339933?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js 22"/>
+  <img src="https://img.shields.io/badge/Fastify-4.x-000000?style=for-the-badge&logo=fastify&logoColor=white" alt="Fastify"/>
+  <img src="https://img.shields.io/badge/TypeScript-5.x-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Redis-7-DC382D?style=for-the-badge&logo=redis&logoColor=white" alt="Redis"/>
+  <img src="https://img.shields.io/badge/JWT_ES256-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT ES256"/>
+  <img src="https://img.shields.io/badge/Argon2-0052CC?style=for-the-badge&logo=lock&logoColor=white" alt="Argon2"/>
+  <img src="https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge" alt="MIT License"/>
+</p>
 
-[![Contributors][contributors-shield]][contributors-url] [![Forks][forks-shield]][forks-url] [![Stargazers][stars-shield]][stars-url] [![Issues][issues-shield]][issues-url] [![MIT License][license-shield]][license-url]
+<h1 align="center">🚀 Enterprise URL Shortener</h1>
 
-### 📑 Tópicos:
+<p align="center">
+  <strong>Plataforma de Encurtamento de URLs de Alto Desempenho com Clean Architecture, Segurança Zero-Trust e Threat Intelligence</strong>
+</p>
 
--   [Sobre](#sobre)
--   [Instalação](#instalação)
--   [Como usar?](#como-usar)
--   [Contatos](#contatos)
+<p align="center">
+  <em>Hash Base62 O(1) · Cache-Aside (Redis) · Algoritmo ES256 & Cookies HttpOnly · Safe Browsing</em>
+</p>
 
-## Sobre
+---
 
-### Este projeto consiste no desenvolvimento do backend de um sistema de encurtador de links, que fornece uma API para criar, gerenciar e rastrear URLs encurtadas.
+## 📋 Sumário
 
-## Instalação
+- [Sobre o Projeto](#-sobre-o-projeto)
+- [Features](#-features)
+- [Segurança](#-segurança)
+- [Arquitetura](#-arquitetura)
+- [API Endpoints](#-api-endpoints)
+- [Stack Tecnológica](#-stack-tecnológica)
+- [Autor](#-autor)
 
-#### ⚠️ Será necessário ter instalado em seu sistema operacional o Docker
+---
 
-#### Dentro da pasta do projeto renomeie o arquivo `.env.example` para `.env` e preencha as informações do seu provedor de email.
+## 💡 Sobre o Projeto
 
-#### Logo após, dentro da pasta do projeto, execute os seguintes comandos:
+O **Enterprise URL Shortener** é um sistema backend construído em **Node.js (Fastify) e TypeScript**, desenhado para escala massiva e segurança de nível militar.
 
-#### 📌 Criando a imagem do projeto:
+Foi projetado utilizando **Clean Architecture (Hexagonal)**, permitindo total desacoplamento entre regras de negócio, banco de dados (Sequelize) e interfaces web. Ele é capaz de processar milhares de redirecionamentos por segundo usando um padrão de **Cache-Aside com Redis** e algoritmos matemáticos nativos (`crypto.randomBytes`) com conversão para Base62.
 
-```docker
-docker-compose up -d --build
-```
+---
 
-#### ⚠️ Verifique antes se existe algum processo esteja rodando em background na porta especificada para uso do contêiner, caso tenha encerre este processo
+## ✨ Features
 
-## Como usar ?
+- ⚡ **Alta Performance** — Encurtamento ultrarrápido com gerador nativo em C++ e Base62 O(1).
+- 🛡️ **Threat Intelligence** — Provedor de Safe Browsing com Blacklists locais e detecção de XSS/Phishing.
+- 🍪 **Cookies Seguros** — Transição do JWT ES256 via HttpOnly, Secure e SameSite=Strict (Zero-Trust).
+- 🔐 **Argon2** — Hashing de senhas otimizado em memória/tempo (resistente a GPUs).
+- 📦 **Redis Cache-Aside** — Mitigação de DDoS e lentidão de I/O em URLs virais.
+- ✅ **Prevenção de Race Conditions** — Tratamento de colisões no banco de dados, dobrando o throughput de INSERT.
+- 📖 **Swagger OpenAPI 3.0** — Documentação interativa nativa suportando `cookieAuth`.
 
-### 📍 Acesse http://localhost:8083
+---
 
-#### Para ter acesso a documentação da API
+## 🛡 Segurança
 
-### 📍 Acesse http://localhost:8083/docs
+### Modelo de Autenticação (Zero-Trust)
 
-## Contatos
+A API adota a abordagem Zero-Trust e recusa Headers `Authorization`. O JWT é assinado usando a curva elíptica ECDSA P-256 (`ES256`), e transacionado exclusivamente por Cookies `HttpOnly`.
 
-[![LinkedIn][linkedin-shield]][linkedin-url] [![Gmail][gmail-shield]][gmail-url] [![Meu Portfolio][me-portfolio-shield]][me-portfolio-url]
+### Flags de Segurança do Cookie
 
-[contributors-shield]: https://img.shields.io/github/contributors/devrafaelsoares/url-shortener.svg?style=for-the-badge
-[contributors-url]: https://github.com/devrafaelsoares/url-shortener/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/devrafaelsoares/url-shortener.svg?style=for-the-badge
-[forks-url]: https://github.com/devrafaelsoares/url-shortener/network/members
-[stars-shield]: https://img.shields.io/github/stars/devrafaelsoares/url-shortener.svg?style=for-the-badge
-[stars-url]: https://github.com/devrafaelsoares/url-shortener/stargazers
-[issues-shield]: https://img.shields.io/github/issues/devrafaelsoares/url-shortener.svg?style=for-the-badge
-[issues-url]: https://github.com/devrafaelsoares/url-shortener/issues
-[license-shield]: https://img.shields.io/github/license/devrafaelsoares/url-shortener.svg?style=for-the-badge
-[license-url]: https://github.com/devrafaelsoares/url-shortener/blob/master/LICENSE
-[linkedin-shield]: https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white
-[linkedin-url]: https://www.linkedin.com/in/rafael-henrique-soares-de-freitas-2a667a23a/
-[gmail-shield]: https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white
-[gmail-url]: mailto:rafael.soares.developer@gmail.com
-[me-portfolio-shield]: https://img.shields.io/badge/website-000000?style=for-the-badge&logo=About.me&logoColor=white
-[me-portfolio-url]: https://devrafaelsoares.com.br
-[nlw-journey-thumb]: ./docs/nlw-journey.png
+| Flag | Valor | Proteção |
+|------|-------|----------|
+| `HttpOnly` | `true` | Impede acesso via JavaScript (proteção contra **XSS**) |
+| `Secure` | `true` | Cookie enviado apenas sobre **HTTPS** (Em produção) |
+| `SameSite` | `Strict` | Impede envio em requisições cross-site (proteção contra **CSRF**) |
+| `Path` | `/` | Disponível em todos os endpoints |
+
+---
+
+## 🏗 Arquitetura
+
+O projeto segue Clean Architecture com separação rigorosa de limites:
+
+| Camada | Pacote | Responsabilidade |
+|--------|--------|------------------|
+| **Apresentação** | `presentation` | Controladores, Adapters para Fastify e Validações Zod |
+| **Infraestrutura** | `infra` | PostgreSQL (Sequelize), Redis, Argon2, ES256 |
+| **Casos de Uso** | `domain/usecases` | Orquestração da lógica de negócio |
+| **Entidades** | `domain/entities` | Regras puras e Factory Models |
+| **Protocolos** | `domain/protocols` | Interfaces invertidas de Repositórios e Providers (Inversão de Dependência) |
+
+---
+
+## 🌐 API Endpoints
+
+A documentação interativa oficial roda na rota local via Swagger: `http://localhost:8080/docs`
+
+| Método | Endpoint | Autenticação | Descrição |
+|--------|----------|:------------:|-----------|
+| `POST` | `/urls` | ✅ Cookie ES256 | Encurta uma nova URL (Passa pela proteção Safe Browsing) |
+| `GET` | `/urls/me` | ✅ Cookie ES256 | Lista todas as URLs do usuário logado (Paginado) |
+| `GET` | `/:short_url` | ❌ Pública | Redireciona e computa a visualização via Cache (Redis -> Postgre) |
+| `POST` | `/login` | ❌ Pública | Autentica o usuário e retorna Cookie de Sessão |
+
+---
+
+## 🛠 Stack Tecnológica
+
+| Tecnologia | Propósito |
+|------------|-----------|
+| **Node.js + Fastify** | Servidor de altíssima velocidade e processamento I/O assíncrono |
+| **TypeScript** | Segurança de tipos em tempo de compilação |
+| **PostgreSQL** | Persistência relacional transacional |
+| **Redis** | Cache de memória ultra-rápida (Cache-Aside pattern) |
+| **Argon2** | Derivação de chaves para senhas robustas |
+| **Zod** | Validação de Schema |
+| **Swagger-UI (OpenAPI 3)**| Documentação de API RESTful acoplada com injeção de Cookies |
+
+---
+
+## 👤 Autor
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/devrafaelsoares">
+        <img src="https://github.com/devrafaelsoares.png" width="100px;" alt="Rafael Soares"/><br />
+        <sub><b>Rafael Soares</b></sub>
+      </a>
+    </td>
+  </tr>
+</table>
