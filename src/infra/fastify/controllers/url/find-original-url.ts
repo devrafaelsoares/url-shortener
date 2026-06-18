@@ -52,6 +52,26 @@ export class FindOriginalUrlControllerFastify implements Controller<FastifyReque
             value: { ...url },
         } = foundUrlResult;
 
+        try {
+            const parsedUrl = new URL(url.original_url);
+            const allowedProtocols = ["http:", "https:"];
+            if (!allowedProtocols.includes(parsedUrl.protocol)) {
+                return {
+                    success: false,
+                    moment,
+                    status_code: HttpStatus.BAD_REQUEST,
+                    data: { message: "URL original possui um protocolo inválido ou não seguro." },
+                };
+            }
+        } catch {
+            return {
+                success: false,
+                moment,
+                status_code: HttpStatus.BAD_REQUEST,
+                data: { message: "URL original malformada." },
+            };
+        }
+
         reply.redirect(url.original_url, HttpStatus.REDIRECT);
     }
 }

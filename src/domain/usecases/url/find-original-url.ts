@@ -26,14 +26,22 @@ export class FindOriginalUrlUseCase {
     }: FindOriginalUrlUseCaseRequestProps): Promise<
         Either<ValidationError<UrlLogPropsCreate>[] | NotFoundEntityError, UrlResponseProps>
     > {
-        const foundUrl = await this.props.urlRepository.findByShortUrl(short_url);
+        // 1. Tentar ler do Cache Ultra-Rápido (Redis)
+        let foundUrl = await this.props.urlMemoryRepository.findByShortUrl(short_url);
 
-        const currentDate = new Date();
-
+        // 2. Cache Miss: Buscar no banco SQL
         if (!foundUrl) {
-            return error(new NotFoundEntityError(ErrorMessages.NOT_EXISTS_SHORT_URL, HttpStatus.NOT_FOUND));
+            foundUrl = await this.props.urlRepository.findByShortUrl(short_url);
+            
+            if (!foundUrl) {
+                return error(new NotFoundEntityError(ErrorMessages.NOT_EXISTS_SHORT_URL, HttpStatus.NOT_FOUND));
+            }
+
+            // 3. Preencher o Cache para as próximas leituras
+            await this.props.urlMemoryRepository.save(foundUrl);
         }
 
+        const currentDate = new Date();
         const isExpiredUrl = foundUrl.expiresAt && foundUrl.expiresAt.getTime() <= currentDate.getTime();
 
         if (isExpiredUrl) {
