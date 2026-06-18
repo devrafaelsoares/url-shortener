@@ -50,7 +50,7 @@ export class UrlLog implements UrlLogProps {
             ...props,
             userAgent: props.userAgent ?? "",
             createdAt: props.createdAt ?? date,
-            updatedAt: props.createdAt ?? date,
+            updatedAt: props.updatedAt ?? date,
         };
     }
 

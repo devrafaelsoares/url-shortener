@@ -10,7 +10,7 @@ class RedisClient {
                 port: env.REDIS_PORT,
                 username: env.REDIS_USERNAME,
                 password: env.REDIS_PASSWORD,
-                tls: {},
+                ...(env.NODE_ENV === "production" ? { tls: {} } : {}),
             });
             console.log("Console> 🔰 Redis connected");
         }

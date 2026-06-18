@@ -9,7 +9,6 @@ import {
     SuccessUrlsResponseSchema,
     UnauthorizedUrlResponseSchema,
     UrlCreateRequestBodySchema,
-    UrlPaginateParamsStringSchema,
     UrlPaginateQueryStringSchema,
 } from "@infra/fastify/validators/url";
 
@@ -52,21 +51,18 @@ export const FindOriginalUrlSchema: FastifySchema = {
 };
 
 export const FindAllUrlsSchema: FastifySchema = {
-    description: "Recupera a URL original associada ao identificador do registro.",
+    description: "Recupera todas as URLs encurtadas do usuário autenticado.",
     tags: ["URL"],
     response: {
         200: SuccessUrlsResponseSchema.describe(
-            "Resposta com sucesso, contendo a URL original. O código fornecido não corresponde a nenhuma URL encurtada existente."
+            "Resposta com sucesso, contendo a lista paginada de URLs do usuário autenticado."
         ),
         400: BadRequestUrlResponseSchema.describe(
             "O número da página deve ser maior ou igual a 1. Verifique o valor da página fornecido."
         ),
-        404: NotFoundUrlResponseSchema.describe("Usuário não encontrado no sistema."),
+        401: UnauthorizedUrlResponseSchema.describe("Usuário não autorizado a realizar a operação."),
     },
     querystring: UrlPaginateQueryStringSchema.describe(
         "Parâmetros de consulta para paginar a lista de URLs encurtadas."
-    ),
-    params: UrlPaginateParamsStringSchema.describe(
-        "Parâmetros de rota, incluindo o identificador do usuário para recuperar suas URLs."
     ),
 };

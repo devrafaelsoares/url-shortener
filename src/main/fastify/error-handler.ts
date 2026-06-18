@@ -1,6 +1,7 @@
 import { HttpStatus } from "@presentation/protocols";
 import type { FastifyError, FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import { ZodError } from "zod";
+import { hasZodFastifySchemaValidationErrors } from "fastify-type-provider-zod";
 
 type FastifyErrorHandler = FastifyInstance["errorHandler"];
 
@@ -9,6 +10,20 @@ export const errorHandler: FastifyErrorHandler = (
     request: FastifyRequest,
     reply: FastifyReply
 ) => {
+    if (hasZodFastifySchemaValidationErrors(error)) {
+        return reply.status(HttpStatus.BAD_REQUEST).send({
+            success: false,
+            moment: new Date(),
+            data: {
+                errors: error.validation.map(err => ({
+                    path: err.params?.issue?.path?.join('.') || err.instancePath || "unknown",
+                    message: err.message,
+                })),
+            },
+            status_code: HttpStatus.BAD_REQUEST,
+        });
+    }
+
     if (error instanceof ZodError) {
         return reply.status(HttpStatus.BAD_REQUEST).send({
             success: false,
@@ -19,7 +34,7 @@ export const errorHandler: FastifyErrorHandler = (
                     message,
                 })),
             },
-            status_code: error.statusCode,
+            status_code: error.statusCode || HttpStatus.BAD_REQUEST,
         });
     }
 
@@ -34,11 +49,13 @@ export const errorHandler: FastifyErrorHandler = (
         });
     }
 
+    request.log.error({ err: error, requestId: request.id }, "Unhandled error");
+
     return reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send({
         success: false,
         moment: new Date(),
-        data: { errors: error.validation },
-        status_code: error.statusCode,
+        data: { message: "Erro interno do servidor" },
+        status_code: HttpStatus.INTERNAL_SERVER_ERROR,
     });
 };
 

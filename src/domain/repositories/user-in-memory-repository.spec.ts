@@ -3,7 +3,7 @@ import {
     PasswordProvider,
     PasswordProviderConfig,
 } from "@domain/protocols/providers";
-import { BcryptPasswordProvider } from "@infra/providers/password";
+import { Argon2PasswordProvider } from "@infra/providers/password";
 import { UserInMemoryRepository } from "./user-in-memory-repository";
 import { UserFactory } from "@domain/factories";
 import { User } from "@domain/entities";
@@ -17,7 +17,7 @@ describe("UserInMemoryRepository", () => {
 
     beforeEach(async () => {
         userInMemoryRepository = new UserInMemoryRepository();
-        passwordProvider = new BcryptPasswordProvider();
+        passwordProvider = new Argon2PasswordProvider();
 
         idProvider = new Cuid2IdProvider();
         const passwordProviderConfig: PasswordProviderConfig = {

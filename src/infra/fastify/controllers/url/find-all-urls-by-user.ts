@@ -1,4 +1,4 @@
-import { FindAllUrlsByUserParamsProps, FindAllUrlsByUserQueryProps } from "@presentation/adpaters";
+import { FindAllUrlsByUserQueryProps } from "@presentation/adpaters";
 import { FindAllUrlsByUserUseCase } from "@domain/usecases/url";
 import { Controller, HttpResponse, HttpStatus } from "@presentation/protocols";
 import { FastifyRequest } from "fastify";
@@ -11,9 +11,9 @@ export class FindAllUrlsByUserControllerFastify implements Controller<FastifyReq
     constructor(private props: FindAllUrlsByUserControllerFastifyProps) {}
 
     async handle(
-        request: FastifyRequest<{ Params: FindAllUrlsByUserParamsProps; Querystring: FindAllUrlsByUserQueryProps }>
+        request: FastifyRequest<{ Querystring: FindAllUrlsByUserQueryProps }>
     ): Promise<HttpResponse | void> {
-        const { user_id } = request.params;
+        const user_id = request.authenticatedUserId;
         const { limit = 10, page = 1 } = request.query;
 
         const foundAllUrlsResult = await this.props.findAllUrlsByUserUseCase.execute({ user_id, limit, page });

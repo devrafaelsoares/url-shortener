@@ -2,16 +2,14 @@ import { UserPropsCreate } from "@domain/entities";
 import { ValidationError, Validator } from "@domain/protocols/validators";
 
 export class UserValidatorSimple implements Validator<UserPropsCreate> {
-    private errors: ValidationError<UserPropsCreate>[] = [];
-
     validate(props: UserPropsCreate): ValidationError<UserPropsCreate>[] {
-        this.cleanErrors();
+        const errors: ValidationError<UserPropsCreate>[] = [];
 
-        this.validateName(props.name);
-        this.validateEmail(props.email);
-        this.validatePassword(props.password);
+        this.validateName(props.name, errors);
+        this.validateEmail(props.email, errors);
+        this.validatePassword(props.password, errors);
 
-        return this.errors;
+        return errors;
     }
 
     private static isEmpty(value: string): boolean {
@@ -25,7 +23,7 @@ export class UserValidatorSimple implements Validator<UserPropsCreate> {
         );
     }
 
-    private validateName(value: string): void {
+    private validateName(value: string, errors: ValidationError<UserPropsCreate>[]): void {
         const rules = [
             {
                 validate: (val: string) => UserValidatorSimple.isEmpty(val),
@@ -40,22 +38,23 @@ export class UserValidatorSimple implements Validator<UserPropsCreate> {
 
         for (const rule of rules) {
             if (rule.validate(value)) {
-                this.errors.push({ path: "name", message: rule.message });
+                errors.push({ path: "name", message: rule.message });
                 break;
             }
         }
     }
 
-    private validatePassword(value: string): void {
+    private validatePassword(value: string, errors: ValidationError<UserPropsCreate>[]): void {
         const rules = [
-            {
-                validate: (val: string) => val.length < 8,
-                message: "A senha deve ter no mínimo oito caracteres",
-            },
+            { validate: (val: string) => val.length < 8, message: "A senha deve ter no mínimo oito caracteres" },
+            { validate: (val: string) => !/[A-Z]/.test(val), message: "A senha deve conter pelo menos uma letra maiúscula" },
+            { validate: (val: string) => !/[a-z]/.test(val), message: "A senha deve conter pelo menos uma letra minúscula" },
+            { validate: (val: string) => !/\d/.test(val), message: "A senha deve conter pelo menos um número" },
+            { validate: (val: string) => !/[!@#$%^&*(),.?":{}|<>]/.test(val), message: "A senha deve conter pelo menos um caractere especial" },
         ];
         for (const rule of rules) {
             if (rule.validate(value)) {
-                this.errors.push({
+                errors.push({
                     path: "password",
                     message: rule.message,
                 });
@@ -64,7 +63,7 @@ export class UserValidatorSimple implements Validator<UserPropsCreate> {
         }
     }
 
-    private validateEmail(value: string): void {
+    private validateEmail(value: string, errors: ValidationError<UserPropsCreate>[]): void {
         const rules = [
             {
                 validate: (val: string) => !UserValidatorSimple.isEmail(val),
@@ -74,16 +73,12 @@ export class UserValidatorSimple implements Validator<UserPropsCreate> {
 
         for (const rule of rules) {
             if (rule.validate(value)) {
-                this.errors.push({
+                errors.push({
                     path: "email",
                     message: rule.message,
                 });
                 break;
             }
         }
-    }
-
-    cleanErrors(): void {
-        this.errors = [];
     }
 }

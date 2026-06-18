@@ -18,7 +18,7 @@ const sequelizeOptionsDevelopmentPostgres: SequelizeOptions = {
     dialect: "postgres",
     logging: isProduction ? false : console.log,
     dialectOptions: {
-        ssl: true,
+        ...(isProduction ? { ssl: { require: true, rejectUnauthorized: false } } : {}),
         keepAlive: true,
     },
     timezone: "America/Sao_Paulo",

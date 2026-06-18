@@ -33,9 +33,8 @@ export const UserCreateStructureSchema = z.object({
 });
 
 export const UserLoginResponseStructureSchema = z.object({
+    message: z.string().describe("Mensagem de sucesso."),
     user_id: z.string().cuid2().describe("Identificador único do usuário."),
-    token: z.string().describe("Token de acesso gerado para o usuário."),
-    refresh_token: z.string().describe("Token de renovação para manter a sessão do usuário."),
 });
 
 export const UserValidateResponseSchema = z.object({
@@ -102,7 +101,9 @@ const SuccessUserValidateResponseSchema = z.object({
 
 const SuccessUserRevalidateResponseSchema = z.object({
     ...ResponseSuccessStructure,
-    data: z.string().describe("Token atualizado após a revalidação do usuário."),
+    data: z.object({
+        message: z.string().describe("Mensagem indicando o sucesso na revalidação."),
+    }),
 });
 
 const ConflictUserResponseSchema = z.object({
@@ -143,7 +144,7 @@ const BadRequestUserErrorsResponseSchema = z.object({
                 z.object({
                     path: z.string().describe("Campo que apresentou erro de validação."),
                     message: z.string().describe("Descrição detalhada do problema ocorrido no campo."),
-                })
+                }),
             )
             .describe("Lista de erros de validação nos campos do formulário."),
     }),
@@ -167,7 +168,7 @@ export const UserSendConfirmationAccountSchema: FastifySchema = {
     response: {
         200: SuccessSendConfirmationAccountResponseSchema.describe("Solicitação de confirmação enviada com sucesso."),
         400: BadRequestUserMessageResponseSchema.describe(
-            "Erroao enviar uma nova solicitação. É necessário aguarda o tempo informado."
+            "Erroao enviar uma nova solicitação. É necessário aguarda o tempo informado.",
         ),
     },
 };
@@ -178,10 +179,10 @@ export const UserSendRecoverPasswordSchema: FastifySchema = {
     body: SendRecoverPasswordRequestSchema,
     response: {
         200: SuccessSendRecoverPasswordResponseSchema.describe(
-            "Solicitação de recuperação de senha enviada com sucesso."
+            "Solicitação de recuperação de senha enviada com sucesso.",
         ),
         400: BadRequestUserMessageResponseSchema.describe(
-            "Erroao enviar uma nova solicitação. É necessário aguarda o tempo informado."
+            "Erroao enviar uma nova solicitação. É necessário aguarda o tempo informado.",
         ),
     },
 };

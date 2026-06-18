@@ -25,7 +25,7 @@ type Cookie = {
     options?: CookieSerializeOptions;
 };
 
-export type HttpResponse<T = any> = {
+export type HttpResponse<T = Record<string, unknown>> = {
     success: boolean;
     moment: Date;
     status_code: HttpStatus;

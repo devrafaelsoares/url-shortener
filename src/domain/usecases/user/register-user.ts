@@ -40,7 +40,7 @@ export class RegisterUserUseCase {
         const foundUser = await this.props.userRepository.findByEmail(email);
 
         if (foundUser) {
-            return error(new ExistsEntityError(ErrorMessages.EXISTS_USER_EMAIL, HttpStatus.CONFLIT));
+            return error(new ExistsEntityError(ErrorMessages.REGISTRATION_FAILED, HttpStatus.CONFLIT));
         }
 
         const hashingAlgorithm = await HashingAlgorithm.create({
@@ -89,10 +89,6 @@ export class RegisterUserUseCase {
 
         if (this.props.sendEmail === SendEmail.TRUE) {
             const sendEmailInfo = await this.props.sendEmailUserEmailConfirmation.send(createdUser);
-            if (sendEmailInfo.isError()) {
-                const { message } = sendEmailInfo.value;
-                return error(new NotFoundEntityError(message, HttpStatus.INTERNAL_SERVER_ERROR));
-            }
             if (sendEmailInfo.isError()) {
                 const { message } = sendEmailInfo.value;
                 return error(new NotFoundEntityError(message, HttpStatus.INTERNAL_SERVER_ERROR));

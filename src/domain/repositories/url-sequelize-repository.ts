@@ -16,7 +16,7 @@ export class UrlSequelizeRepository implements UrlRepository {
 
     async findPaginatedByUser(page: number = 1, limit: number = 10, userId: UserDomain["id"]): Promise<UrlDomain[]> {
         const foundUrls = await Url.findAll({
-            offset: page - 1,
+            offset: (page - 1) * limit,
             limit,
             where: {
                 userId,

@@ -4,6 +4,8 @@ export enum ErrorMessages {
     NOT_EXISTS_SHORT_URL = "O código da URL encurtada não existe",
     EXISTS_URL = "O código da URL encurtada já está em uso",
     EXISTS_USER_EMAIL = "Este e-mail já está registrado em nossa plataforma",
+    REGISTRATION_FAILED = "Não foi possível completar o registro. Verifique os dados e tente novamente.",
+    GENERIC_RECOVER_PASSWORD = "Se este e-mail estiver cadastrado, você receberá instruções em breve.",
     INVALID_USER_PASSWORD = "Usuário ou senha inválidos",
     TOKEN_NOT_MATCH_USER = "O token fornecido não corresponde ao usuário informado",
     ACCOUNT_ALREADY_ACTIVATED = "Sua conta já se encontra ativada",
@@ -15,3 +17,4 @@ export enum ErrorMessages {
     PAGE_LARGER_THAN_LIMIT = "O número da página é maior que o limite permitido",
     ACCESS_DENIED = "Acesso não autorizado",
 }
+

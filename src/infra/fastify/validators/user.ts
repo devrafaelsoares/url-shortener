@@ -1,5 +1,14 @@
 import { z } from "zod";
 
+const passwordValidation = z
+    .string({ required_error: "É necessário informar a senha" })
+    .min(8, "A senha deve ter no mínimo oito caracteres")
+    .regex(/[A-Z]/, "A senha deve conter pelo menos uma letra maiúscula")
+    .regex(/[a-z]/, "A senha deve conter pelo menos uma letra minúscula")
+    .regex(/\d/, "A senha deve conter pelo menos um número")
+    .regex(/[!@#$%^&*(),.?":{}|<>]/, "A senha deve conter pelo menos um caractere especial")
+    .describe("Senha do usuário");
+
 const baseUserSchema = {
     name: z
         .string({ required_error: "É necessário informar o nome" })
@@ -11,10 +20,7 @@ const baseUserSchema = {
         })
         .email("Email informado é inválido")
         .describe("Email do usuário"),
-    password: z
-        .string({ required_error: "É necessário informar a senha" })
-        .min(8, "A senha deve ter no minímo oito caracteres")
-        .describe("Senha do usuário"),
+    password: passwordValidation,
 };
 
 const baseConfirmationToken = {
@@ -65,12 +71,7 @@ export const ChangePasswordRequestSchema = z.object({
         .min(1, "É necesário informar o token de confirmação")
         .describe("Token de confirmação"),
 
-    new_password: z
-        .string({
-            required_error: "É necessário informar a nova senha",
-        })
-        .min(8, "A senha deve ter no mínimo oito caracteres")
-        .describe("Nova senha"),
+    new_password: passwordValidation,
 });
 
 export const RecoverPasswordConfirmRequestSchema = z.object({

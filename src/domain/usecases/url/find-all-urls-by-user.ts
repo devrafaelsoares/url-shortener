@@ -32,10 +32,20 @@ export class FindAllUrlsByUserUseCase {
 
         const countUrls = await this.props.urlRepository.countByUser(user_id);
 
-        const pages = Math.ceil(countUrls / limit);
+        const pages = countUrls > 0 ? Math.ceil(countUrls / limit) : 0;
 
-        if (page > pages) {
+        if (countUrls > 0 && page > pages) {
             return error(new BadRequestEntityError(ErrorMessages.PAGE_LARGER_THAN_LIMIT, HttpStatus.BAD_REQUEST));
+        }
+
+        if (countUrls === 0) {
+            return success({
+                items: [],
+                page,
+                limit,
+                pages: 0,
+                total: 0,
+            });
         }
 
         const foundUrls = await this.props.urlRepository.findPaginatedByUser(page, limit, user_id);

@@ -7,6 +7,7 @@ import { EmailService } from "@domain/protocols/providers";
 
 type SendUserRecoverPasswordUseCaseProps = {
     readonly emailService: EmailService;
+    readonly emailFrom: string;
 };
 
 export class SendUserRecoverPasswordUseCase {
@@ -28,7 +29,7 @@ export class SendUserRecoverPasswordUseCase {
 
         const sendEmailInfo = await this.props.emailService.send(
             Email.create({
-                from: "rafael.soares.developer@gmail.com",
+                from: this.props.emailFrom,
                 to: email,
                 subject: "Recuperação de conta - Altere a sua senha",
                 html: htmlContent,
@@ -36,9 +37,7 @@ export class SendUserRecoverPasswordUseCase {
         );
 
         if (sendEmailInfo.isError()) {
-            const { message } = sendEmailInfo.value;
-
-            return error(new NotFoundEntityError(message, HttpStatus.INTERNAL_SERVER_ERROR));
+            return error(new NotFoundEntityError("Falha no serviço de envio de e-mails. Tente novamente mais tarde.", HttpStatus.INTERNAL_SERVER_ERROR));
         }
 
         return success(undefined);

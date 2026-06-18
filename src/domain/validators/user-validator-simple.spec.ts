@@ -1,7 +1,7 @@
 import { User, UserPropsCreate } from "@domain/entities";
 import { UserValidatorSimple } from "./user-validator-simple";
 import { IdProvider, PasswordProvider } from "@domain/protocols/providers";
-import { BcryptPasswordProvider } from "@infra/providers/password";
+import { Argon2PasswordProvider } from "@infra/providers/password";
 import { Cuid2IdProvider } from "@infra/providers/id";
 import { HashingAlgorithm, HashingAlgorithmPropsCreate } from "@domain/entities";
 import { JwtToken } from "@infra/providers/token";
@@ -15,7 +15,7 @@ describe("UserValidatorSimple", () => {
 
     beforeEach(() => {
         userValidatorSimple = new UserValidatorSimple();
-        passwordProvider = new BcryptPasswordProvider();
+        passwordProvider = new Argon2PasswordProvider();
         idProvider = new Cuid2IdProvider();
         confirmationEmailTokenProvider = new JwtToken({
             expirationTime: "1h",

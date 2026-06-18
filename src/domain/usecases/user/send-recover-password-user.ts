@@ -45,7 +45,7 @@ export class SendRecoverPasswordUserUseCase {
         const foundUser = await this.props.userRepository.findByEmail(email);
 
         if (!foundUser) {
-            return error(new NotFoundEntityError(ErrorMessages.NOT_EXISTS_USER, HttpStatus.NOT_FOUND));
+            return success(undefined);
         }
 
         const { token, expiresAt } = this.props.tokenProvider.generate();
@@ -72,11 +72,6 @@ export class SendRecoverPasswordUserUseCase {
 
         if (this.props.sendEmail === SendEmail.TRUE) {
             const sendEmailInfo = await this.props.sendUserRecoverPasswordUseCase.send(foundUser);
-
-            if (sendEmailInfo.isError()) {
-                const { message } = sendEmailInfo.value;
-                return error(new NotFoundEntityError(message, HttpStatus.INTERNAL_SERVER_ERROR));
-            }
 
             if (sendEmailInfo.isError()) {
                 const { message } = sendEmailInfo.value;
