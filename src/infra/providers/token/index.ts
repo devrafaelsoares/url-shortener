@@ -1,1 +1,1 @@
-export * from "./jwt-provider";
+export { JwtToken, JwtAsymmetricAuthProvider } from "./jwt-provider";
